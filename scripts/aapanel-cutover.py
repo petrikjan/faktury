@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """One-time Apache cutover after a verified first start; no automatic DB rollback."""
 import contextlib
+import fcntl
 import hashlib
 import importlib.util
 import json
@@ -179,6 +180,8 @@ def cutover(log):
         # Once Node has been public it could have received new writes. Keep
         # maintenance on failure rather than restoring a second independent writer.
         apache_write(maintenance if activated else original, log)
+        helper.private_json(PRIVATE / 'cutover-status.json', {'state': 'failed', 'public_maintenance': activated,
+                            'original_php_restored': not activated, 'no_database_rollback': True})
         raise
 
 
@@ -186,7 +189,8 @@ if __name__ == '__main__':
     os.umask(0o077)
     if os.geteuid() != 0:
         raise SystemExit('Root through aaPanel required.')
-    with (PRIVATE / 'cutover-diagnostics.log').open('a') as log:
+    with (PRIVATE / 'deploy.lock').open('a') as lock, (PRIVATE / 'cutover-diagnostics.log').open('a') as log:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         try:
             cutover(log)
             print(json.dumps({'stage': 'cutover', 'state': 'ready'}))

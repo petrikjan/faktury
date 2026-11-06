@@ -1,6 +1,6 @@
 # Průběžné předání místní verze
 
-Aktuální stav nasazování z 6. 11. 2026 uvádějí STATUS.md a DEPLOYMENT.md; následující text zachycuje implementační předání. Repozitář už existuje a vlastník povolil nasazení. Uživatel odmítl PHP renderer a upřesnil, že pixelová identita není podmínkou; požaduje stejné čitelné rozložení. To řeší dokončený Node/Chromium renderer. Nové úpravy nasazování zatím čekají na commit a uživatelův push.
+**Produkční nasazení je dokončené; aktuální pravdivý provozní stav a výsledky kontrol jsou v [STATUS.md](STATUS.md) a [DEPLOYMENT.md](DEPLOYMENT.md).** Následující text je historické implementační předání místní verze. Repozitář už existuje, vlastník provádí push a schválil nasazování z main přes aaPanel Git Manager. Původní PHP je zálohované a není veřejné.
 
 ## Skutečně spuštěno
 

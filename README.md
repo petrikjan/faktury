@@ -2,7 +2,7 @@
 
 Soukromá česká fakturace: Node.js/TypeScript, Fastify, React/Vite a MariaDB. Nové rozhraní, serverové návrhy a vystavení, snímky údajů, přesné desetinné výpočty, kontakty, ceník, přehledy, audit, chráněné PDF a minimální MCP.
 
-**Lokální verze obsahuje vlastníkem schválený import skutečných dat z 6. 11. 2026. Import i zachování dosavadní práce prošly lokální kontrolou; obsah záznamů se modelu nezobrazoval. PDF zůstává čistě v Node, pixelová identita není požadována. Repozitář uživatel vytvořil a pushnul; schválil nasazování z `main` přes aaPanel Git Manager stejně jako u Maxnera. Serverové přepnutí zatím neproběhlo.** Podrobnosti a aktuální výsledky v [docs/STATUS.md](docs/STATUS.md).
+**Produkce běží na [faktury.janpetrik.cz](https://faktury.janpetrik.cz).** Obsahuje vlastníkem schválený import i následnou místní práci; přenos na server prošel porovnáním všech řádků a všech PDF. Původní PHP je zálohované a není veřejné. GitHub je propojený s aaPanel Git Managerem pro push do `main`, stejně jako Maxner. PDF zůstává čistě v Node; pixelová identita není požadována. Obsah skutečných záznamů se modelu nezobrazoval. Podrobnosti v [docs/STATUS.md](docs/STATUS.md).
 
 ## Spuštění
 
