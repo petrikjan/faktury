@@ -205,11 +205,13 @@ export function parseDump(source: string): LegacyData {
   for (const raw of statements(source)) {
     const s = stripComments(raw);
     if (!s || s === ';') continue;
-    const insert = s.match(/^INSERT INTO\s+`([^`]+)`\s*\(([^)]+)\)\s*VALUES\s*([\s\S]+);$/i);
+    const insert = s.match(/^INSERT INTO\s+`([^`]+)`\s*(?:\(([^)]+)\)\s*)?VALUES\s*([\s\S]+);$/i);
     if (insert) {
       const t = schema.find((t) => t.table === insert[1]);
       if (!t) throw new Error('UNKNOWN_TABLE');
-      const cols = [...insert[2].matchAll(/`([^`]+)`/g)].map((m) => m[1]);
+      const cols = insert[2]
+        ? [...insert[2].matchAll(/`([^`]+)`/g)].map((m) => m[1])
+        : t.columns.map((column) => column.column);
       if (!cols.length || cols.some((c) => !t.columns.some((x) => x.column === c)))
         throw new Error('UNKNOWN_COLUMN');
       for (const row of values(insert[3])) {
@@ -218,6 +220,15 @@ export function parseDump(source: string): LegacyData {
       }
       continue;
     }
+    // mysqldump wrappers describe the source snapshot; they are never executed.
+    const wrapper =
+      s.match(/^DROP TABLE IF EXISTS\s+`([^`]+)`\s*;$/i) ??
+      s.match(/^LOCK TABLES\s+`([^`]+)`\s+(?:WRITE|READ(?:\s+LOCAL)?)\s*;$/i);
+    if (wrapper) {
+      if (!schema.some((table) => table.table === wrapper[1])) throw new Error('UNKNOWN_TABLE');
+      continue;
+    }
+    if (/^UNLOCK TABLES\s*;$/i.test(s)) continue;
     if (
       /^CREATE TABLE\s+`[^`]+`\s*\(/i.test(s) ||
       /^ALTER TABLE\s+`[^`]+`\s+(?:ADD |MODIFY )/i.test(s) ||

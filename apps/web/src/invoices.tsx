@@ -419,20 +419,30 @@ export function Report({ data: d, currency }: any) {
   const s = d.summary.find((s: any) => s.currency === currency),
     months = d.months.filter((m: any) => m.currency === currency),
     annual = d.annual_summary?.find((x: any) => x.currency === currency);
-  const max = Math.max(1, ...months.map((m: any) => Number(m.net)));
+  const monthly = Array.from({ length: 12 }, (_, i) =>
+    months
+      .filter((m: any) => m.month === i + 1)
+      .reduce((n: number, m: any) => n + Number(m.net), 0),
+  );
+  const max = Math.max(1, ...monthly);
   return (
     <div className="report">
       <div className="report-grid">
         <div>
           <h3>Základ podle měsíce · {currency}</h3>
           <div className="bars">
-            {Array.from({ length: 12 }, (_, i) => {
-              const v = months
-                .filter((m: any) => m.month === i + 1)
-                .reduce((n: number, m: any) => n + Number(m.net), 0);
+            {monthly.map((v, i) => {
+              const height = Math.max(2, (v / max) * 130);
               return (
                 <div className="bar-col" key={i} title={money(String(v), currency)}>
-                  <div className="bar" style={{ height: Math.max(2, (v / max) * 130) }} />
+                  <svg
+                    className="bar"
+                    viewBox="0 0 100 130"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                  >
+                    <rect x="0" y={130 - height} width="100" height={height} rx="4" />
+                  </svg>
                   <span>{i + 1}</span>
                 </div>
               );

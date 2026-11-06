@@ -1151,11 +1151,11 @@ dialog .form-actions {
   color: var(--muted);
 }
 .bar {
+  display: block;
   width: 100%;
   max-width: 30px;
-  background: var(--accent);
-  border-radius: 4px 4px 0 0;
-  min-height: 2px;
+  height: 130px;
+  fill: var(--accent);
 }
 .audit-list {
   padding: 0 24px;

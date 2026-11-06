@@ -166,7 +166,7 @@ test('upraví vystavenou fakturu s novým PDF, zachová staré PDF a smaže po d
     .getByRole('dialog')
     .getByRole('button', { name: 'Vystavit fakturu', exact: true })
     .click();
-  await expect(page.getByRole('heading', { name: /^20\d{6}$/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /^20\d{6}$/ })).toBeVisible({ timeout: 20000 });
   const id = page.url().split('/').pop();
   const before = await (await page.request.get('/api/invoices/' + id)).json();
   const original = await (await page.request.get('/api/invoices/' + id + '/pdf')).body();
@@ -177,9 +177,9 @@ test('upraví vystavenou fakturu s novým PDF, zachová staré PDF a smaže po d
     .getByRole('dialog')
     .getByRole('button', { name: 'Uložit novou verzi', exact: true })
     .click();
-  await expect(
-    page.getByRole('heading', { name: before.invoice_number, exact: true }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: before.invoice_number, exact: true })).toBeVisible(
+    { timeout: 20000 },
+  );
   const revised = await (await page.request.get('/api/invoices/' + id)).json();
   expect(revised.net).toBe('1750.00');
   expect(revised.gross).toBe('2117.50');

@@ -93,7 +93,12 @@ export async function renderInvoice(
   options: { browser?: Browser } = {},
 ) {
   const html = await invoiceHtml(invoice);
-  const browser = options.browser ?? (await chromium.launch({ channel: 'chrome', headless: true }));
+  const browser =
+    options.browser ??
+    (await chromium.launch({
+      channel: process.env.PDF_BROWSER_CHANNEL === 'chromium' ? undefined : 'chrome',
+      headless: true,
+    }));
   let page: Page | undefined;
   try {
     page = await browser.newPage({ viewport: { width: 794, height: 1123 } });

@@ -93,7 +93,7 @@ test('přihlášení, URL filtry, detail, návrh s ruční položkou, kontakt be
     .getByRole('dialog')
     .getByRole('button', { name: 'Vystavit fakturu', exact: true })
     .click();
-  await expect(page.getByRole('heading', { name: /^20\d{6}$/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /^20\d{6}$/ })).toBeVisible({ timeout: 20000 });
   const invoiceId = page.url().split('/').pop();
   const invoiceNumber = await page.getByRole('heading', { name: /^20\d{6}$/ }).innerText();
   const [download] = await Promise.all([

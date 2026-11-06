@@ -1,6 +1,6 @@
 # Průběžné předání místní verze
 
-Místní verze je připravená k posouzení a schválení prvního commitu. Uživatel odmítl PHP renderer a upřesnil, že pixelová identita není podmínkou; požaduje stejné čitelné rozložení. To řeší dokončený Node/Chromium renderer. Init commit se do souhlasu vlastníka nevytváří.
+Aktuální stav nasazování z 6. 11. 2026 uvádějí STATUS.md a DEPLOYMENT.md; následující text zachycuje implementační předání. Repozitář už existuje a vlastník povolil nasazení. Uživatel odmítl PHP renderer a upřesnil, že pixelová identita není podmínkou; požaduje stejné čitelné rozložení. To řeší dokončený Node/Chromium renderer. Nové úpravy nasazování zatím čekají na commit a uživatelův push.
 
 ## Skutečně spuštěno
 
@@ -40,6 +40,6 @@ Podmínky testu a výsledky uvádí [PDF.md](PDF.md). Ukázka je v `.private/rev
 - Dostupnost stejné DB/runtime a ověření triggeru/restartu/TLS/proxy v konkrétním aaPanelu.
 - Konkrétní OAuth IdP/PKCE/redirect a přímé připojení z konkrétního mobilního ChatGPT.
 
-Lokální Git repozitář má větev main bez commitu a bez remote. Žádné soubory nebyly přidány slepým `git add .`. Konkrétní seznam kandidátů je v INIT-COMMIT-FILES.md. Aktuální seznam i testy a známé vzory tajných hodnot jsou zkontrolované. Po souhlasu vlastníka lze vytvořit init commit; push provede uživatel. Produkční deploy a přepnutí domény nadále vyžadují samostatné povolení. Lokální import už schválený a dokončený je.
+Repozitář petrikjan/faktury má main a uživatelem vytvořený init commit. Žádné soubory nebyly přidány slepým `git add .`. Konkrétní seznam kandidátů je v INIT-COMMIT-FILES.md. Aktuální seznam i testy a známé vzory tajných hodnot jsou zkontrolované. Push provede uživatel. Produkční deploy a přepnutí domény už byly výslovně povoleny. Lokální import už schválený a dokončený je.
 
 PDF bez uložené přílohy se při prvním náhledu nebo stažení lokálně vytvoří z uložených údajů a potvrzené DPH. Kopie je označená jako reconstructed, má audit a další požadavky použijí stejný soubor. Částky, položky a snímek se nemění. Název stažení je číslo faktury s příponou .pdf, také u historické verze podle jejího tehdejšího čísla. Ověřeno 58 aplikačními testy, osmi E2E scénáři a jedním skutečným místním vytvořením bez zobrazování obsahu modelu.

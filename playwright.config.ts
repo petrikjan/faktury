@@ -8,7 +8,7 @@ export default defineConfig({
   use: {
     baseURL: 'http://127.0.0.1:3199',
     browserName: 'chromium',
-    channel: 'chrome',
+    channel: process.env.PDF_BROWSER_CHANNEL === 'chromium' ? undefined : 'chrome',
     trace: 'off',
     screenshot: 'only-on-failure',
   },

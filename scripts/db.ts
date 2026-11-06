@@ -6,6 +6,16 @@ import { stdin, stdout } from 'node:process';
 import argon2 from 'argon2';
 import type { Pool } from 'mysql2/promise';
 import { poolFor, rows, exec, hash, transaction } from '../apps/api/src/db.js';
+export async function checkSchema(db: Pool) {
+  const applied = await rows(db, 'SELECT name,checksum FROM schema_migrations');
+  const files = (await readdir('db/migrations')).filter((n) => n.endsWith('.sql')).sort();
+  if (applied.length !== files.length) throw new Error('SCHEMA_MIGRATION_REQUIRED');
+  for (const name of files) {
+    const checksum = hash(await readFile(resolve('db/migrations', name), 'utf8'));
+    if (!applied.some((row) => row.name === name && row.checksum === checksum))
+      throw new Error('SCHEMA_MIGRATION_REQUIRED');
+  }
+}
 export async function migrate(db: Pool) {
   const conn = await db.getConnection();
   try {
@@ -191,6 +201,7 @@ if (process.argv[1]?.endsWith('/db.ts')) {
   try {
     const command = process.argv[2];
     if (command === 'migrate') await migrate(db);
+    else if (command === 'check') await checkSchema(db);
     else if (command === 'seed') await seed(db);
     else if (command === 'admin') await admin(db);
     else throw new Error('Neznámý příkaz.');

@@ -4,12 +4,12 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=24.14.0 <25"
+    "node": ">=26.13.0 <27"
   },
   "packageManager": "npm@11.9.0",
   "scripts": {
     "dev": "concurrently -k \"node --import tsx --watch apps/api/src/main.ts\" \"vite --config apps/web/vite.config.ts\"",
-    "build": "npm run typecheck && vite build --config apps/web/vite.config.ts && tsup apps/api/src/main.ts --format esm --target node24 --out-dir dist/api --sourcemap",
+    "build": "npm run typecheck && vite build --config apps/web/vite.config.ts && tsup apps/api/src/main.ts --format esm --target node26 --out-dir dist/api --sourcemap",
     "start": "node --env-file=.env dist/api/main.js",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
@@ -17,6 +17,7 @@
     "test:e2e": "playwright test",
     "check": "npm run typecheck && npm run lint && npm test && npm run test:deploy && npm run build",
     "db:migrate": "node --import tsx scripts/db.ts migrate",
+    "db:check": "node --import tsx scripts/db.ts check",
     "db:seed": "node --import tsx scripts/db.ts seed",
     "admin:create": "node --import tsx scripts/db.ts admin",
     "migration:preflight": "node --import tsx scripts/migration/cli.ts preflight",
@@ -25,7 +26,7 @@
     "migration:verify": "node --import tsx scripts/migration/cli.ts verify",
     "pdf:compare": "node --import tsx scripts/pdf-compare.ts",
     "backup": "node --import tsx scripts/backup.ts",
-    "start:production": "node --env-file=.env --env-file=.release.env dist/api/main.js",
+    "start:production": "node scripts/start-production.mjs",
     "test:deploy": "python3 -m unittest discover -s tests -p \"test_deploy.py\"",
     "migration:archive": "node --import tsx scripts/migration/archive-source.ts",
     "format": "prettier --write . --ignore-unknown",

@@ -5,7 +5,7 @@ import argon2 from 'argon2';
 import { buildApp } from '../apps/api/src/app.js';
 import { config } from '../apps/api/src/config.js';
 import { poolFor, rows, exec, hash, json } from '../apps/api/src/db.js';
-import { migrate, seed, createFirstAdmin } from '../scripts/db.js';
+import { migrate, seed, createFirstAdmin, checkSchema } from '../scripts/db.js';
 import { clear } from './helpers.js';
 import * as service from '../apps/api/src/services.js';
 import { applyInvoicePreferences } from '../scripts/invoice-adjustments.js';
@@ -78,6 +78,29 @@ afterAll(async () => {
   await db.end();
 });
 describe('Serverové hranice', () => {
+  it('před nasazením pouze ověří úplné shodné migrace a odmítne chybějící či změněné', async () => {
+    await checkSchema(db);
+    const [original] = await rows(
+      db,
+      'SELECT name,checksum FROM schema_migrations ORDER BY name LIMIT 1',
+    );
+    try {
+      await exec(db, 'UPDATE schema_migrations SET checksum=? WHERE name=?', [
+        '0'.repeat(64),
+        original.name,
+      ]);
+      await expect(checkSchema(db)).rejects.toThrow('SCHEMA_MIGRATION_REQUIRED');
+      await exec(db, 'DELETE FROM schema_migrations WHERE name=?', [original.name]);
+      await expect(checkSchema(db)).rejects.toThrow('SCHEMA_MIGRATION_REQUIRED');
+    } finally {
+      await exec(
+        db,
+        'INSERT INTO schema_migrations(name,checksum) VALUES(?,?) ON DUPLICATE KEY UPDATE checksum=VALUES(checksum)',
+        [original.name, original.checksum],
+      );
+    }
+    await checkSchema(db);
+  });
   it('chrání všechny obchodní cesty a session se po odhlášení zneplatní', async () => {
     for (const url of [
       '/api/invoices',

@@ -2,11 +2,11 @@
 
 Soukromá česká fakturace: Node.js/TypeScript, Fastify, React/Vite a MariaDB. Nové rozhraní, serverové návrhy a vystavení, snímky údajů, přesné desetinné výpočty, kontakty, ceník, přehledy, audit, chráněné PDF a minimální MCP.
 
-**Lokální verze obsahuje vlastníkem schválený import skutečných dat z 6. 11. 2026. Import i zachování dosavadní práce prošly lokální kontrolou; obsah záznamů se modelu nezobrazoval. PDF zůstává čistě v Node, pixelová identita není požadována. Žádný init commit, push ani deploy.** Podrobnosti a aktuální výsledky v [docs/STATUS.md](docs/STATUS.md).
+**Lokální verze obsahuje vlastníkem schválený import skutečných dat z 6. 11. 2026. Import i zachování dosavadní práce prošly lokální kontrolou; obsah záznamů se modelu nezobrazoval. PDF zůstává čistě v Node, pixelová identita není požadována. Repozitář uživatel vytvořil a pushnul; schválil nasazování z `main` přes aaPanel Git Manager stejně jako u Maxnera. Serverové přepnutí zatím neproběhlo.** Podrobnosti a aktuální výsledky v [docs/STATUS.md](docs/STATUS.md).
 
 ## Spuštění
 
-Požadováno Node **24.22.2**, npm **11.9.0**, MariaDB **11.4.13**. aaPanel verzi je nutné ověřit před migrací. Běžný provoz nevyžaduje adresář legacy.
+Požadováno Node **26.13.0**, npm **11.9.0**, MariaDB **12.3.2**. Tyto verze odpovídají ověřenému cílovému aaPanelu. Původní místní databáze 11.4.13 zůstává oddělená; její datadir se novým serverem neotevírá. Běžný provoz nevyžaduje adresář legacy.
 
 ```sh
 nvm install
@@ -28,7 +28,7 @@ npm run dev
 
 Otevřete [lokální aplikaci](http://localhost:5173). API běží na 127.0.0.1:3100; Vite ho zpřístupňuje pod stejným originem. APP_ORIGIN musí odpovídat adrese v prohlížeči. Pro data se nepoužívá localStorage, analytika ani externí fonty/CDN.
 
-Produkční build: `npm run build`. `npm start` slouží pro sestavenou aplikaci s `.env`. Pro aaPanel je připraven `start:production`, který navíc načte release SHA z `.release.env`. Produkční start neprovádí žádnou migraci, seed ani import. Produkční nasazení teprve po dokončení PDF a schválení. Produkční konfigurace vyžaduje PDF_REVIEW_APPROVED=true; nyní má zůstat false.
+Produkční build: `npm run build`. `npm start` slouží pro sestavenou aplikaci s `.env`. Pro aaPanel je připraven `start:production`, který navíc načte release SHA z `.release.env`. Produkční start neprovádí žádnou migraci, seed ani import. Produkční konfigurace vyžaduje PDF_REVIEW_APPROVED=true; vlastník schválil čitelné původní rozložení a požádal o nasazení. Konkrétní serverový renderer je ještě nutné funkčně ověřit. Automatický deploy spouští pouze čtecí `db:check`; chybějící nebo změněná migrace jej zastaví. Viz [postup nasazení](docs/DEPLOYMENT.md).
 
 ## Testy
 
@@ -48,7 +48,7 @@ npm run test:pdf     # 11 syntetických případů, text všech položek a QR z 
 npm run pdf:compare  # volitelné legacy pouze pro syntetický referenční test
 ```
 
-Playwright používá lokální Google Chrome (`channel: chrome`); je nutné ho mít nainstalovaný. PDF matice vyžaduje Python s pdfplumber (volitelně PDF_QA_PYTHON) a Poppler. Referenční PDF test vyžaduje PHP s gd/mbstring, Dompdf 3.1.6 z nepřepsaného legacy a Poppler. Je to izolovaný test, nikoli povolení použít PHP v běžném runtime. Skript není součástí startu aplikace.
+Playwright používá výchozí lokální Google Chrome. Na Linuxu lze nastavit `PDF_BROWSER_CHANNEL=chromium` a nainstalovat připnutý prohlížeč pomocí `npx playwright install chromium`; cache mimo release určuje `PLAYWRIGHT_BROWSERS_PATH`. PDF matice vyžaduje Python s pdfplumber (volitelně PDF_QA_PYTHON) a Poppler. Referenční PDF test vyžaduje PHP s gd/mbstring, Dompdf 3.1.6 z nepřepsaného legacy a Poppler. Je to izolovaný test, nikoli runtime závislost. Skript není součástí startu aplikace.
 
 ## Struktura
 

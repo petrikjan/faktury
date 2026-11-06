@@ -10,7 +10,10 @@ import { pdfCases } from '../tests/fixtures/pdf-cases.js';
 const directory = resolve('.private/pdf/matrix');
 await mkdir(directory, { recursive: true, mode: 0o700 });
 const normalize = (s: string) => s.normalize('NFC').replace(/\s+/gu, '');
-const browser = await chromium.launch({ channel: 'chrome', headless: true });
+const browser = await chromium.launch({
+  channel: process.env.PDF_BROWSER_CHANNEL === 'chromium' ? undefined : 'chrome',
+  headless: true,
+});
 const report: any = { state: 'complete', browser: browser.version(), cases: [] };
 try {
   for (const test of pdfCases()) {

@@ -19,13 +19,21 @@ for (const file of files) {
   await mkdir(dirname(target), { recursive: true });
   await copyFile(join(root, file), target);
 }
-const local = JSON.parse(await readFile('.private/test-env.json', 'utf8'));
+const local = JSON.parse(
+  await readFile(process.env.VERIFICATION_ENV_FILE ?? '.private/test-env.json', 'utf8'),
+);
 const env = {
   ...process.env,
   DATABASE_URL: local.DATABASE_URL,
   TEST_DATABASE_URL: local.DATABASE_URL,
   SOURCE_TEST_DATABASE_URL: local.SOURCE_TEST_DATABASE_URL,
   E2E_DATABASE_URL: local.E2E_DATABASE_URL,
+  ...(local.LOCAL_MERGE_SOURCE_TEST_URL
+    ? { LOCAL_MERGE_SOURCE_TEST_URL: local.LOCAL_MERGE_SOURCE_TEST_URL }
+    : {}),
+  ...(local.LOCAL_MERGE_BASELINE_TEST_URL
+    ? { LOCAL_MERGE_BASELINE_TEST_URL: local.LOCAL_MERGE_BASELINE_TEST_URL }
+    : {}),
 };
 delete env.NODE_ENV;
 const log = await open('.private/clean-install.log', 'w', 0o600);

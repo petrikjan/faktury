@@ -13,6 +13,7 @@ const env = z
     TRUST_PROXY: z.enum(['false', 'loopback']).default('false'),
     DEPLOY_SHA: z.string().default('local'),
     PDF_REVIEW_APPROVED: z.enum(['false', 'true']).default('false'),
+    PDF_BROWSER_CHANNEL: z.enum(['chrome', 'chromium']).default('chrome'),
     MCP_ENABLED: z.enum(['true', 'false']).default('false'),
     MCP_ISSUER: z.string().default(''),
     MCP_AUDIENCE: z.string().default(''),

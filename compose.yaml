@@ -1,6 +1,6 @@
 services:
   db:
-    image: mariadb:11.4.13
+    image: mariadb:12.3.2
     environment:
       MARIADB_DATABASE: faktury
       MARIADB_USER: faktury
