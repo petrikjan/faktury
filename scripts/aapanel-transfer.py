@@ -47,6 +47,22 @@ def require_empty_database(tables):
         raise TransferError('Production target is not empty; never reset or overwrite it.')
 
 
+def transfer_members(archive, staging):
+    members = []
+    for entry in archive.getmembers():
+        inside(staging, entry.name)
+        if not entry.isdir() and not entry.isfile():
+            raise TransferError('Unexpected transfer archive member type.')
+        # macOS tar can add AppleDouble resource metadata. It is never data to
+        # restore, and must not be extracted into either private or live storage.
+        if entry.isfile() and Path(entry.name).name.startswith('._'):
+            continue
+        if Path(entry.name).parts[0] != BUNDLE:
+            raise TransferError('Unexpected transfer archive member.')
+        members.append(entry)
+    return members
+
+
 def protected_prepare():
     path = PRIVATE / 'aapanel-prepare.py'
     if path.is_symlink() or path.stat().st_uid != 0 or path.stat().st_mode & 0o022:
@@ -82,6 +98,37 @@ try{
 """
 
 
+def verify_rows(helper, manifest, log):
+    subprocess.run(['/usr/sbin/runuser', '-u', 'www', '--', str(NODE), '--input-type=module', '-e', ROW_VERIFIER],
+                   cwd=BASE / 'shared/runtime', env=helper.app_environment(),
+                   input=manifest, stdout=log, stderr=log, check=True)
+
+
+def verify_existing(archive, expected, log):
+    helper = protected_prepare()
+    status = json.loads((PRIVATE / 'transfer-status.json').read_text())
+    if status.get('state') != 'complete' or archive.is_symlink() or not archive.is_relative_to(PRIVATE) or digest(archive) != expected:
+        raise TransferError('Verified prior transfer and its original artifact required.')
+    with tarfile.open(archive, 'r:gz') as source:
+        manifest = json.load(source.extractfile(BUNDLE + '/manifest.json'))
+        row_manifest = source.extractfile(BUNDLE + '/row-manifest.json').read()
+    storage = BASE / 'shared/storage'
+    expected_files = {file['path']: file['sha256'] for file in manifest['files']}
+    actual = set()
+    for folder, directories, files in os.walk(storage, followlinks=False):
+        for name in directories + files:
+            if (Path(folder) / name).is_symlink():
+                raise TransferError('Unexpected private storage symlink.')
+        for name in files:
+            actual.add(str((Path(folder) / name).relative_to(storage)))
+    if actual != set(expected_files):
+        raise TransferError('Existing storage differs from the verified transfer.')
+    for name, expected_hash in expected_files.items():
+        if digest(inside(storage, name)) != expected_hash:
+            raise TransferError('Existing private file differs from the verified transfer.')
+    verify_rows(helper, row_manifest, log)
+
+
 def transfer(archive, expected, log):
     helper = protected_prepare()
     if not archive.is_relative_to(PRIVATE) or archive.is_symlink() or not archive.is_file() or digest(archive) != expected:
@@ -99,11 +146,7 @@ def transfer(archive, expected, log):
     staging = PRIVATE / ('node-transfer-' + secrets.token_hex(8))
     staging.mkdir(mode=0o700)
     with tarfile.open(archive, 'r:gz') as source:
-        for entry in source.getmembers():
-            inside(staging, entry.name)
-            if (not entry.isdir() and not entry.isfile()) or Path(entry.name).parts[0] != BUNDLE:
-                raise TransferError('Unexpected transfer archive member.')
-        source.extractall(staging, filter='data')
+        source.extractall(staging, members=transfer_members(source, staging), filter='data')
     bundle = staging / BUNDLE
     manifest = json.loads((bundle / 'manifest.json').read_text())
     if manifest.get('version') != 1 or digest(bundle / 'database.sql') != manifest.get('database_sha256'):
@@ -134,9 +177,7 @@ def transfer(archive, expected, log):
         with (bundle / 'database.sql').open('rb') as source:
             subprocess.run([str(helper.MYSQL), client, DATABASE], stdin=source, stdout=log, stderr=log, check=True)
     # This reader receives only private digests over stdin. It never prints rows or hashes.
-    subprocess.run(['/usr/sbin/runuser', '-u', 'www', '--', str(NODE), '--input-type=module', '-e', ROW_VERIFIER],
-                   cwd=BASE / 'shared/runtime', env=helper.app_environment(),
-                   input=(bundle / 'row-manifest.json').read_bytes(), stdout=log, stderr=log, check=True)
+    verify_rows(helper, (bundle / 'row-manifest.json').read_bytes(), log)
     account = pwd.getpwnam('www')
     for name, expected_hash in expected_files.items():
         target = inside(storage, name)

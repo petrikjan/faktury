@@ -9,6 +9,8 @@ import unittest
 import sqlite3
 import contextlib
 import os
+import tarfile
+import io
 from unittest.mock import patch
 
 def module(name, file):
@@ -21,8 +23,70 @@ webhook = module('webhook', 'deploy-webhook.py')
 deploy = module('deploy', 'aapanel-deploy.py')
 prepare = module('prepare', 'aapanel-prepare.py')
 transfer = module('transfer', 'aapanel-transfer.py')
+cutover = module('cutover', 'aapanel-cutover.py')
 
 class WebhookTests(unittest.TestCase):
+    def test_retry_only_verifies_already_transferred_data_and_rejects_changed_files(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            private=Path(tmp)/'private';private.mkdir()
+            base=Path(tmp)/'application';storage=base/'shared/storage';storage.mkdir(parents=True)
+            (storage/'synthetic.pdf').write_bytes(b'synthetic')
+            manifest={'version':1,'files':[{'path':'synthetic.pdf','sha256':hashlib.sha256(b'synthetic').hexdigest()}]}
+            (private/'transfer-status.json').write_text(json.dumps({'state':'complete'}))
+            path=private/'transfer.tar.gz'
+            with tarfile.open(path,'w:gz') as archive:
+                for name, value in [('manifest.json',manifest),('row-manifest.json',{'version':1,'tables':{}})]:
+                    data=json.dumps(value).encode();entry=tarfile.TarInfo(transfer.BUNDLE+'/'+name);entry.size=len(data)
+                    archive.addfile(entry,io.BytesIO(data))
+            with patch.object(transfer,'PRIVATE',private),patch.object(transfer,'BASE',base), \
+                 patch.object(transfer,'protected_prepare',return_value=object()),patch.object(transfer,'verify_rows') as verify:
+                transfer.verify_existing(path,transfer.digest(path),None)
+                verify.assert_called_once()
+                (storage/'synthetic.pdf').write_bytes(b'changed')
+                with self.assertRaises(transfer.TransferError):
+                    transfer.verify_existing(path,transfer.digest(path),None)
+                self.assertEqual(verify.call_count,1)
+
+    def test_cutover_keeps_tls_and_acme_but_removes_php_public_directory(self):
+        original='\n'.join('<VirtualHost *:'+port+'>\nServerName '+cutover.HOST+'\nDocumentRoot "'+cutover.OLD_PUBLIC+'"\n'+
+            ('SSLEngine On\nSSLCertificateFile /synthetic/cert.pem\n<FilesMatch \\.php$>\nSetHandler "proxy:unix:/tmp/synthetic.sock|fcgi://localhost"\n</FilesMatch>\n' if port=='443' else 'RewriteEngine On\nRewriteRule ^ https://example.test%{REQUEST_URI} [R=301,L]\n')+
+            '<Directory "'+cutover.OLD_PUBLIC+'">\nAllowOverride All\nRequire all granted\n</Directory>\n</VirtualHost>' for port in ['80','443'])
+        maintenance=cutover.maintenance_config(original)
+        self.assertEqual(maintenance.count('[R=503,L]'),2)
+        self.assertLess(maintenance.index('[R=503,L]'),maintenance.index('[R=301,L]'))
+        proxy=cutover.proxy_config(original)
+        self.assertNotIn('fcgi://localhost',proxy)
+        self.assertNotIn('DocumentRoot "'+cutover.OLD_PUBLIC+'"',proxy)
+        self.assertEqual(proxy.count('DocumentRoot "'+cutover.NEW_PUBLIC+'"'),2)
+        self.assertEqual(proxy.count('ProxyPass "/" "http://127.0.0.1:3110/"'),1)
+        self.assertIn('SSLCertificateFile /synthetic/cert.pem',proxy)
+        self.assertIn('ProxyPreserveHost On',proxy)
+        self.assertIn('SetHandler default-handler',proxy)
+        for invalid in [original.replace('*:443','*:444'),original.replace('DocumentRoot "'+cutover.OLD_PUBLIC+'"','DocumentRoot "/unrelated"')]:
+            with self.assertRaises(cutover.CutoverError):
+                cutover.proxy_config(invalid)
+
+    def test_transfer_ignores_mac_metadata_but_rejects_archive_links_and_traversal(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            def archive(names):
+                data=io.BytesIO()
+                with tarfile.open(fileobj=data, mode='w') as output:
+                    for name, kind in names:
+                        member=tarfile.TarInfo(name);member.type=kind
+                        if kind==tarfile.SYMTYPE:member.linkname='/etc'
+                        output.addfile(member)
+                data.seek(0)
+                return tarfile.open(fileobj=data)
+            with archive([('._'+transfer.BUNDLE,tarfile.REGTYPE),
+                          (transfer.BUNDLE+'/._database.sql',tarfile.REGTYPE),
+                          (transfer.BUNDLE+'/database.sql',tarfile.REGTYPE)]) as source:
+                self.assertEqual([m.name for m in transfer.transfer_members(source,root)], [transfer.BUNDLE+'/database.sql'])
+            for name,kind in [('../._escape',tarfile.REGTYPE),
+                              (transfer.BUNDLE+'/link',tarfile.SYMTYPE),('unrelated',tarfile.REGTYPE)]:
+                with archive([(name,kind)]) as source,self.assertRaises(transfer.TransferError):
+                    transfer.transfer_members(source,root)
+
     def test_transfer_refuses_existing_production_data_and_paths_outside_private_storage(self):
         transfer.require_empty_database('')
         with self.assertRaises(transfer.TransferError):

@@ -89,4 +89,6 @@ it('migruje ze skutečné MariaDB se zdrojovým DDL včetně utf8mb3/latin1 slou
     await source.end();
     await target.end();
   }
-});
+  // The isolated source fixture rebuilds 34 tables. Shared server storage may
+  // need longer for the DDL fsyncs than the usual per-test limit.
+}, 120000);
