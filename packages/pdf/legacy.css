@@ -1,0 +1,321 @@
+@page {
+  size: A4;
+  margin: 1cm;
+}
+body {
+  height: 27.7cm;
+  margin: 0 auto;
+  overflow: hidden;
+  width: 19cm;
+  background: #fff;
+  font: 16px/1;
+  font-family:
+    DejaVu Sans,
+    sans-serif;
+  position: relative;
+}
+
+h1 {
+  font-size: 0.5cm;
+}
+
+h2 {
+  font-size: 0.5cm;
+}
+
+h4 {
+  font-size: 0.3cm;
+  font-weight: normal;
+  margin: 0px;
+}
+
+.main-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.main {
+  margin: 0.5in;
+}
+
+.width-33 {
+  width: 33%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.width-66 {
+  width: 65%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.width-50 {
+  width: 50%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.head {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 0.3cm;
+  line-height: 1.2;
+  margin-bottom: 0.25cm;
+}
+
+.head td {
+  width: 33.333%;
+  vertical-align: top;
+  padding: 0;
+  border: 0;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.heading {
+  border-top: 1px solid grey;
+  min-height: 1.2cm;
+  width: 100%;
+}
+
+.heading h1 {
+  margin: 0.2cm 0;
+  line-height: 1.2;
+}
+
+.heading p {
+  margin: 0px;
+}
+
+.thin-border {
+  border: 1px solid black;
+}
+
+.invoice-id {
+  display: inline-block;
+  float: right;
+  padding: 0.2cm;
+  background-color: grey;
+  color: white;
+}
+
+.width-50 {
+  width: 50%;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.float-left {
+  float: left;
+}
+
+.logo-banka {
+  padding-right: 0.5cm;
+}
+
+.odberatel {
+  font-size: 0.3cm;
+  padding-left: 0.5cm;
+}
+
+.banka {
+  font-size: 0.27cm;
+}
+
+.odberatel-adresa {
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+  font-size: 0.4cm;
+  padding-top: 0.2cm;
+  padding-bottom: 0.2cm;
+}
+
+.logo {
+  height: 2cm;
+  background-image: url('../webimage/logo.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin: 0cm 1cm 0.5cm 0;
+}
+
+.logo img {
+  max-height: 2cm;
+  max-width: 100%;
+  /*background-image: url("../webimage/logo.jpg");*/
+  /*background-size: contain;
+            background-repeat: no-repeat;*/
+  margin: 0cm 1cm 1cm 0;
+}
+
+.right-margin {
+  padding-right: 0.1cm;
+}
+
+.left-margin {
+  padding-left: 0.1cm;
+}
+
+.right-margin-bigger {
+  padding-right: 0.2cm;
+}
+
+.left-margin-bigger {
+  padding-left: 0.2cm;
+}
+
+.datum-symbol {
+  border-top: 1px solid grey;
+  padding-top: 0.2cm;
+}
+
+.datum {
+  margin-right: 0.2cm;
+}
+
+.symbol {
+  margin-left: 0.2cm;
+}
+
+.odberatel-ico-dic {
+  margin-top: 0.2cm;
+}
+
+.cislo-uctu {
+  margin-top: 0.4cm;
+  width: 68%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.kod-banky {
+  margin-top: 0.4cm;
+  width: 28%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.cislo-uctu-ramecek {
+  margin-top: 0.2cm;
+  border: 0.05cm solid grey;
+  padding: 0.1cm;
+  font-weight: bold;
+  text-align: center;
+}
+
+.polozky {
+  padding-top: 0.5cm;
+  font-size: 0.3cm;
+}
+
+.tabulka-polozky {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.5cm 0cm 0.5cm 0cm;
+}
+
+.tabulka-polozky th {
+  font-size: 0.3cm;
+  margin: 0;
+  padding: 0.1cm;
+  border-bottom: 0.06cm solid #999999;
+}
+
+.tabulka-polozky td {
+  font-size: 0.3cm;
+  margin: 0;
+  padding: 0.1cm;
+  border-bottom: 0.04cm solid #cacaca;
+}
+
+.tabulka-celkem {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1cm 0cm 1cm 0cm;
+}
+
+.tabulka-celkem th {
+  font-size: 0.3cm;
+  text-align: right;
+  margin: 0;
+  padding: 0.1cm;
+  border-bottom: 0.06cm solid #999999;
+}
+
+.tabulka-celkem td {
+  font-size: 0.3cm;
+  text-align: right;
+  margin: 0;
+  padding: 0.1cm;
+  border-bottom: 0.04cm solid #cacaca;
+}
+
+.td-celkem {
+  text-align: left !important;
+  font-weight: bold;
+}
+
+.qr {
+  margin-top: 0.5cm;
+  width: 100%;
+  height: auto;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.qr img {
+  width: 4.5cm;
+  height: 4.5cm;
+}
+
+.qr-label {
+  width: 4.5cm;
+  text-align: center;
+  font-size: 0.3cm;
+  font-weight: bold;
+}
+
+.footer-wrapper {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+}
+
+.footer {
+  margin: 0.5in;
+  border-top: 0.06cm solid #999999;
+  font-size: 0.25cm;
+  color: grey;
+}
+
+.clear {
+  clear: both;
+}
+
+.rozpuleni {
+  display: inline-block;
+  width: 50%;
+  vertical-align: top;
+}
+
+.table-polozka {
+  width: 35%;
+}
+
+.table-ks {
+  width: 13%;
+}

@@ -1,0 +1,17 @@
+{
+  "panel_verified": false,
+  "project_name": "REPLACE_IN_AAPANEL",
+  "panel_dir": "/CHANGE_ME/panel",
+  "mirror": "/CHANGE_ME/repository",
+  "releases": "/CHANGE_ME/releases",
+  "current": "/CHANGE_ME/current",
+  "env_file": "/CHANGE_ME/shared/.env",
+  "test_env_file": "/CHANGE_ME/private/synthetic-test-env.json",
+  "backup_marker": "/CHANGE_ME/private/verified-backup.json",
+  "queue_file": "/CHANGE_ME/private/deploy-queue.db",
+  "lock_file": "/CHANGE_ME/private/deploy.lock",
+  "node_bin_dir": "/CHANGE_ME/node-24.22.2/bin",
+  "run_user": "REPLACE_UNPRIVILEGED_USER",
+  "readiness_url": "http://127.0.0.1:REPLACE_PORT/health/ready",
+  "host_header": "faktury.janpetrik.cz"
+}

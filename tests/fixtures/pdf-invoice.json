@@ -1,0 +1,62 @@
+{
+  "invoice_number": "20260001",
+  "issue_date": "2026-01-15",
+  "tax_date": "2026-01-15",
+  "due_date": "2026-01-29",
+  "source_created": "2026-01-15 12:34:56",
+  "currency": "CZK",
+  "net": "5250.00",
+  "vat": "1102.50",
+  "gross": "6352.50",
+  "snapshot": {
+    "customer": {
+      "id": "2",
+      "company": "Syntetický Ateliér Lípa s.r.o.",
+      "street": "Ukázková",
+      "street_number": "12",
+      "city": "Brno",
+      "zip": "60200",
+      "country": "Česká republika",
+      "ico": "00000001",
+      "dic": "CZ00000001",
+      "payment_id": "0308",
+      "end_customer": false
+    },
+    "supplier": {
+      "company": "Ukázkové studio s.r.o.",
+      "street": "Modelová 12",
+      "city": "Praha",
+      "zip": "11000",
+      "country": "Česká republika",
+      "ico": "00000000",
+      "dic": "CZ00000000",
+      "phone": "+420 000 000 000",
+      "email": "studio@example.test",
+      "website": "www.example.test",
+      "footer": "Syntetický dodavatel, zapsaný v ukázkovém rejstříku. Tento doklad obsahuje pouze testovací údaje."
+    },
+    "bank": { "account_number": "123456789", "bank_code": "0800", "variant": "standard" }
+  },
+  "items": [
+    {
+      "description": "Návrh vizuální identity — žluťoučký kůň",
+      "price": "1500",
+      "quantity": "2.5",
+      "vat_rate": "21",
+      "net": "3750",
+      "vat": "787.5",
+      "gross": "4537.5",
+      "unit": "hod"
+    },
+    {
+      "description": "Příprava tiskových podkladů",
+      "price": "1500",
+      "quantity": "1",
+      "vat_rate": "21",
+      "net": "1500",
+      "vat": "315",
+      "gross": "1815",
+      "unit": ""
+    }
+  ]
+}

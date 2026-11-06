@@ -1,0 +1,189 @@
+/* Chromium adaptation of the active document, preserving the familiar A4 layout. */
+@page {
+  size: A4 portrait;
+  margin: 10mm;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+body {
+  font-family: 'DejaVu Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.invoice-sheet {
+  position: relative;
+  display: flow-root;
+  width: 190mm;
+  height: 276.7mm;
+  box-sizing: border-box;
+}
+.invoice-sheet:not(:last-child) {
+  break-after: page;
+}
+.main-wrapper {
+  display: flow-root;
+}
+.main {
+  margin: 0;
+  padding: 12.7mm;
+  display: flow-root;
+}
+.head {
+  line-height: 1.5;
+}
+.head td {
+  overflow-wrap: anywhere;
+}
+.invoice-party {
+  display: flow-root;
+}
+.banka,
+.odberatel {
+  line-height: 1.5;
+}
+.odberatel-adresa {
+  overflow-wrap: anywhere;
+}
+.odberatel-adresa h3 {
+  margin: 0;
+  font-size: 0.4cm;
+}
+.logo {
+  background-image: none;
+}
+.logo img {
+  display: block;
+  margin: 0;
+  object-fit: contain;
+  object-position: left top;
+}
+.polozky {
+  padding-top: 5mm;
+}
+.tabulka-polozky {
+  table-layout: fixed;
+}
+.tabulka-polozky th,
+.tabulka-polozky td {
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.table-polozka {
+  width: 35%;
+}
+.table-ks {
+  width: 13%;
+}
+.table-cenamj {
+  width: 9%;
+}
+.table-dph {
+  width: 9%;
+}
+.table-bezdph {
+  width: 11%;
+}
+.table-sdph {
+  width: 10%;
+}
+.table-celkem {
+  width: 13%;
+}
+.description {
+  white-space: pre-wrap;
+}
+.item-continuation .description::before {
+  content: 'Pokračování položky: ';
+  color: #777;
+  font-size: 2.5mm;
+}
+.payment-note {
+  font-size: 3mm;
+  line-height: 1.5;
+  margin: 0 0 3mm;
+}
+.settlement {
+  display: grid;
+  grid-template-columns: 33% 65%;
+  gap: 2%;
+}
+.settlement > .width-33,
+.settlement > .width-66 {
+  width: auto;
+  display: block;
+  min-width: 0;
+}
+.tabulka-celkem {
+  table-layout: fixed;
+}
+.tabulka-celkem td,
+.tabulka-celkem th {
+  overflow-wrap: anywhere;
+}
+.settlement h2 {
+  font-size: 5mm;
+  margin: 0.83em 0;
+}
+.settlement h2.amount-due {
+  white-space: nowrap;
+}
+.qr img {
+  display: block;
+}
+.footer-wrapper {
+  position: absolute;
+  bottom: 12.7mm;
+  left: 12.7mm;
+  right: 12.7mm;
+  width: auto;
+}
+.footer {
+  margin: 0;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+.footer > .width-50 {
+  width: auto;
+}
+.page-number {
+  display: block;
+}
+.page-number:empty {
+  display: none;
+}
+.continuation-context {
+  font-size: 3mm;
+  padding: 2mm 0 1mm;
+  color: #555;
+}
+.continuation-context[hidden] {
+  display: none;
+}
+.continuation .polozky {
+  padding-top: 2mm;
+}
+.continuation .tabulka-polozky {
+  margin-top: 3mm;
+}
+/* Match the reference's breathing room around the title, logo and payment fields. */
+.heading {
+  min-height: 14mm;
+}
+.heading h1 {
+  margin: 3mm 0;
+}
+.logo {
+  margin-bottom: 8mm;
+}
+.cislo-uctu,
+.kod-banky {
+  margin-top: 7mm;
+}

@@ -1,0 +1,10 @@
+CREATE TABLE invoice_vat_adjustments (
+ invoice_id BIGINT UNSIGNED PRIMARY KEY,
+ net DECIMAL(30,2) NOT NULL, vat_rate DECIMAL(7,4) NOT NULL,
+ vat DECIMAL(30,2) NOT NULL, gross DECIMAL(30,2) NOT NULL,
+ reason VARCHAR(100) NOT NULL,
+ approved_by BIGINT UNSIGNED NOT NULL,
+ approved_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+ FOREIGN KEY(invoice_id) REFERENCES invoices(id),
+ FOREIGN KEY(approved_by) REFERENCES users(id)
+) ENGINE=InnoDB;

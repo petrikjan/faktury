@@ -1,0 +1,1501 @@
+{
+  "schema": [
+    {
+      "table": "bbs_autologins",
+      "columns": [
+        {
+          "column": "al_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "al_key",
+          "type": "varchar(250) NOT NULL"
+        },
+        {
+          "column": "al_hash",
+          "type": "char(40) NOT NULL"
+        },
+        {
+          "column": "al_lifetime",
+          "type": "int(11) UNSIGNED NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_blog",
+      "columns": [
+        {
+          "column": "blog_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "blog_heading",
+          "type": "varchar(250) NOT NULL"
+        },
+        {
+          "column": "blog_image",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "blog_metadesc",
+          "type": "varchar(160) NOT NULL"
+        },
+        {
+          "column": "blog_urlname",
+          "type": "varchar(100) NOT NULL"
+        },
+        {
+          "column": "blog_content",
+          "type": "longtext NOT NULL"
+        },
+        {
+          "column": "blog_categoryid",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "blog_tags",
+          "type": "varchar(250) NOT NULL"
+        },
+        {
+          "column": "blog_update",
+          "type": "timestamp NOT NULL"
+        },
+        {
+          "column": "blog_publish",
+          "type": "date NOT NULL"
+        },
+        {
+          "column": "blog_status",
+          "type": "tinyint(1) UNSIGNED NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_blog_categories",
+      "columns": [
+        {
+          "column": "bcat_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "bcat_name",
+          "type": "varchar(100) NOT NULL"
+        },
+        {
+          "column": "bcat_urlname",
+          "type": "varchar(100) NOT NULL"
+        },
+        {
+          "column": "bcat_metadesc",
+          "type": "varchar(160) NOT NULL"
+        },
+        {
+          "column": "bcat_status",
+          "type": "tinyint(1) UNSIGNED NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_categories",
+      "columns": [
+        {
+          "column": "cate_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "cate_name_english",
+          "type": "varchar(100) NOT NULL"
+        },
+        {
+          "column": "cate_name_česky",
+          "type": "varchar(100) NOT NULL"
+        },
+        {
+          "column": "cate_urlname",
+          "type": "varchar(100) NOT NULL"
+        },
+        {
+          "column": "cate_metadesc",
+          "type": "varchar(160) NOT NULL"
+        },
+        {
+          "column": "cate_parent",
+          "type": "int(11) UNSIGNED"
+        },
+        {
+          "column": "cate_position",
+          "type": "tinyint(4) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "cate_status",
+          "type": "tinyint(1) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "cate_filters",
+          "type": "smallint(1) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "cate_filter_options",
+          "type": "text NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_categories_products_rel",
+      "columns": [
+        {
+          "column": "rel_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "rel_cateid",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "rel_prodid",
+          "type": "int(11) UNSIGNED NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_contacts",
+      "columns": [
+        {
+          "column": "id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "company",
+          "type": "varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL"
+        },
+        {
+          "column": "street",
+          "type": "varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL"
+        },
+        {
+          "column": "street_number",
+          "type": "varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL"
+        },
+        {
+          "column": "city",
+          "type": "varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL"
+        },
+        {
+          "column": "zip",
+          "type": "varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL"
+        },
+        {
+          "column": "country",
+          "type": "varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL"
+        },
+        {
+          "column": "ico",
+          "type": "varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL"
+        },
+        {
+          "column": "dic",
+          "type": "varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL"
+        },
+        {
+          "column": "payment_id",
+          "type": "varchar(255)"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=latin1", "COLLATE=latin1_swedish_ci"]
+    },
+    {
+      "table": "bbs_countries",
+      "columns": [
+        {
+          "column": "country_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "country_name",
+          "type": "varchar(32)"
+        },
+        {
+          "column": "country_code",
+          "type": "char(2)"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_coupons",
+      "columns": [
+        {
+          "column": "id",
+          "type": "int(11) NOT NULL"
+        },
+        {
+          "column": "title",
+          "type": "varchar(200) NOT NULL"
+        },
+        {
+          "column": "credit",
+          "type": "float NOT NULL"
+        },
+        {
+          "column": "valid_from",
+          "type": "date NOT NULL"
+        },
+        {
+          "column": "valid_until",
+          "type": "date NOT NULL"
+        },
+        {
+          "column": "used",
+          "type": "tinyint(1) NOT NULL"
+        },
+        {
+          "column": "user_id",
+          "type": "int(11) UNSIGNED"
+        },
+        {
+          "column": "created_by_user_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "coupon_code",
+          "type": "varchar(200) NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_credit_orders",
+      "columns": [
+        {
+          "column": "id",
+          "type": "int(10) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "user_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "amount",
+          "type": "float NOT NULL"
+        },
+        {
+          "column": "user_currency",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "payed",
+          "type": "tinyint(1) NOT NULL"
+        },
+        {
+          "column": "created_date",
+          "type": "datetime NOT NULL"
+        },
+        {
+          "column": "payed_date",
+          "type": "datetime"
+        },
+        {
+          "column": "invoice_id",
+          "type": "bigint(20) UNSIGNED"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_credit_orders_cache",
+      "columns": [
+        {
+          "column": "id",
+          "type": "int(10) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "user_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "amount",
+          "type": "float NOT NULL"
+        },
+        {
+          "column": "user_currency",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "created_date",
+          "type": "datetime NOT NULL"
+        },
+        {
+          "column": "payment_fee_in_user_cur",
+          "type": "float"
+        },
+        {
+          "column": "payment_fee_in_system_cur",
+          "type": "float"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_currencies",
+      "columns": [
+        {
+          "column": "cur_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "cur_name",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "cur_code",
+          "type": "char(3) NOT NULL"
+        },
+        {
+          "column": "cur_symbol",
+          "type": "varchar(10) NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_emaillists",
+      "columns": [
+        {
+          "column": "e_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "e_email",
+          "type": "varchar(100) NOT NULL"
+        },
+        {
+          "column": "e_type",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "e_date",
+          "type": "date NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_eplists",
+      "columns": [
+        {
+          "column": "eplist_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "eplist_uniqid",
+          "type": "varchar(250) NOT NULL"
+        },
+        {
+          "column": "eplist_name",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "eplist_contactsub",
+          "type": "tinyint(1) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "eplist_registeredsub",
+          "type": "tinyint(1) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "eplist_newslettersub",
+          "type": "tinyint(1) UNSIGNED NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_exchange_rates",
+      "columns": [
+        {
+          "column": "ex_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "ex_from",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "ex_to",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "ex_value",
+          "type": "decimal(10,4) NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_invoices",
+      "columns": [
+        {
+          "column": "id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "invoice_id",
+          "type": "bigint(20) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "created",
+          "type": "datetime NOT NULL"
+        },
+        {
+          "column": "contact_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "payed",
+          "type": "tinyint(4) NOT NULL"
+        },
+        {
+          "column": "currency_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "total",
+          "type": "float NOT NULL"
+        },
+        {
+          "column": "filename",
+          "type": "varchar(16) NOT NULL"
+        },
+        {
+          "column": "due_days",
+          "type": "int(10) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "alto",
+          "type": "tinyint(4) NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_invoices_details",
+      "columns": [
+        {
+          "column": "id",
+          "type": "int(11) NOT NULL"
+        },
+        {
+          "column": "invoice_id",
+          "type": "bigint(20) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "description",
+          "type": "text NOT NULL"
+        },
+        {
+          "column": "price",
+          "type": "float NOT NULL"
+        },
+        {
+          "column": "product_id",
+          "type": "int(11) UNSIGNED"
+        },
+        {
+          "column": "amount",
+          "type": "float NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_languages",
+      "columns": [
+        {
+          "column": "language_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "language_key",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "language_type",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "language_english",
+          "type": "text NOT NULL"
+        },
+        {
+          "column": "language_česky",
+          "type": "text"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_menuitems",
+      "columns": [
+        {
+          "column": "menu_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "menu_name",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "menu_name_english",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "menu_name_česky",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "menu_routeid",
+          "type": "int(11) UNSIGNED"
+        },
+        {
+          "column": "menu_parentid",
+          "type": "int(11) UNSIGNED"
+        },
+        {
+          "column": "menu_pageid",
+          "type": "int(11) UNSIGNED"
+        },
+        {
+          "column": "menu_show",
+          "type": "tinyint(1) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "menu_position",
+          "type": "tinyint(5) UNSIGNED NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_pages",
+      "columns": [
+        {
+          "column": "page_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "page_heading_english",
+          "type": "varchar(250) NOT NULL"
+        },
+        {
+          "column": "page_metadesc_english",
+          "type": "varchar(160) NOT NULL"
+        },
+        {
+          "column": "page_urlname",
+          "type": "varchar(100) NOT NULL"
+        },
+        {
+          "column": "page_content_english",
+          "type": "longtext NOT NULL"
+        },
+        {
+          "column": "page_heading_česky",
+          "type": "varchar(250) NOT NULL"
+        },
+        {
+          "column": "page_metadesc_česky",
+          "type": "varchar(160) NOT NULL"
+        },
+        {
+          "column": "page_content_česky",
+          "type": "longtext NOT NULL"
+        },
+        {
+          "column": "page_update",
+          "type": "timestamp NOT NULL"
+        },
+        {
+          "column": "page_status",
+          "type": "tinyint(1) UNSIGNED NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_products",
+      "columns": [
+        {
+          "column": "prod_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "prod_idkey",
+          "type": "char(10) NOT NULL"
+        },
+        {
+          "column": "prod_name",
+          "type": "varchar(100) NOT NULL"
+        },
+        {
+          "column": "prod_image",
+          "type": "varchar(100) NOT NULL"
+        },
+        {
+          "column": "prod_filename",
+          "type": "varchar(15) NOT NULL"
+        },
+        {
+          "column": "prod_tags",
+          "type": "varchar(250) NOT NULL"
+        },
+        {
+          "column": "prod_featured",
+          "type": "tinyint(1) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "prod_shortdesc",
+          "type": "varchar(150) NOT NULL"
+        },
+        {
+          "column": "prod_longdesc",
+          "type": "text NOT NULL"
+        },
+        {
+          "column": "prod_adultbook",
+          "type": "tinyint(1) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "prod_booklang",
+          "type": "varchar(30) NOT NULL"
+        },
+        {
+          "column": "prod_pagesno",
+          "type": "tinyint(4) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "prod_wordsno",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "prod_price_max_buys",
+          "type": "smallint(5) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "prod_price_max",
+          "type": "decimal(10,2) NOT NULL"
+        },
+        {
+          "column": "prod_actual_price",
+          "type": "decimal(10,2) NOT NULL"
+        },
+        {
+          "column": "prod_commission",
+          "type": "tinyint(3) UNSIGNED"
+        },
+        {
+          "column": "prod_status",
+          "type": "tinyint(1) UNSIGNED"
+        },
+        {
+          "column": "prod_publish",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "prod_create",
+          "type": "date NOT NULL"
+        },
+        {
+          "column": "prod_update",
+          "type": "timestamp NOT NULL"
+        },
+        {
+          "column": "prod_download_count",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "prod_view_count",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "prod_uid",
+          "type": "int(11) UNSIGNED NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_purchase",
+      "columns": [
+        {
+          "column": "pur_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "pur_user_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "pur_total_price",
+          "type": "float"
+        },
+        {
+          "column": "pur_total_user_price",
+          "type": "float NOT NULL"
+        },
+        {
+          "column": "pur_system_currency",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "pur_user_currency",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "pur_date",
+          "type": "timestamp NOT NULL"
+        },
+        {
+          "column": "pur_invoice_id",
+          "type": "bigint(20) UNSIGNED"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_purchaserecord",
+      "columns": [
+        {
+          "column": "pur_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "pur_code",
+          "type": "varchar(100) NOT NULL"
+        },
+        {
+          "column": "pur_prodid",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "pur_uid",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "pur_date",
+          "type": "timestamp NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_purchase_cache",
+      "columns": [
+        {
+          "column": "pur_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "pur_user_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "pur_total_price",
+          "type": "float"
+        },
+        {
+          "column": "pur_total_user_price",
+          "type": "float NOT NULL"
+        },
+        {
+          "column": "pur_system_currency",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "pur_user_currency",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "payment_fee_in_user_cur",
+          "type": "float"
+        },
+        {
+          "column": "payment_fee_in_system_cur",
+          "type": "float"
+        },
+        {
+          "column": "pur_date",
+          "type": "timestamp NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_purchase_details",
+      "columns": [
+        {
+          "column": "pur_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "pur_parent_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "pur_product_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "pur_user_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "pur_price",
+          "type": "float"
+        },
+        {
+          "column": "pur_user_price",
+          "type": "int(11) UNSIGNED NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_purchase_details_cache",
+      "columns": [
+        {
+          "column": "pur_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "pur_parent_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "pur_product_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "pur_user_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "pur_price",
+          "type": "float"
+        },
+        {
+          "column": "pur_user_price",
+          "type": "float NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_ratings",
+      "columns": [
+        {
+          "column": "rate_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "rate_uid",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "rate_pid",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "rate_stars",
+          "type": "tinyint(1) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "rate_text",
+          "type": "varchar(250) NOT NULL"
+        },
+        {
+          "column": "rate_create",
+          "type": "timestamp NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_routes",
+      "columns": [
+        {
+          "column": "id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "controller",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "slug_english",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "slug_česky",
+          "type": "varchar(50)"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_settings",
+      "columns": [
+        {
+          "column": "uniq_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "key_text",
+          "type": "varchar(250) NOT NULL"
+        },
+        {
+          "column": "value_text",
+          "type": "text NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_testimonial",
+      "columns": [
+        {
+          "column": "testi_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "testi_name",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "testi_desig",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "testi_msg",
+          "type": "varchar(250) NOT NULL"
+        },
+        {
+          "column": "testi_showdesig",
+          "type": "tinyint(1) NOT NULL"
+        },
+        {
+          "column": "testi_image",
+          "type": "varchar(100) NOT NULL"
+        },
+        {
+          "column": "testi_status",
+          "type": "tinyint(1) NOT NULL"
+        },
+        {
+          "column": "testi_order",
+          "type": "tinyint(4) UNSIGNED NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_themes",
+      "columns": [
+        {
+          "column": "theme_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "theme_displayname",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "theme_name",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "theme_status",
+          "type": "tinyint(1) NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_users",
+      "columns": [
+        {
+          "column": "user_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "user_idkey",
+          "type": "bigint(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "user_username",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "user_nickname",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "user_fname",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "user_lname",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "user_email",
+          "type": "varchar(100) NOT NULL"
+        },
+        {
+          "column": "user_pwd",
+          "type": "char(60) NOT NULL"
+        },
+        {
+          "column": "user_registerdate",
+          "type": "timestamp NOT NULL"
+        },
+        {
+          "column": "user_status",
+          "type": "tinyint(1) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "user_key",
+          "type": "varchar(250) NOT NULL"
+        },
+        {
+          "column": "user_accesslevel",
+          "type": "tinyint(1) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "user_language",
+          "type": "varchar(30) NOT NULL"
+        },
+        {
+          "column": "user_currency",
+          "type": "int(11) UNSIGNED NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_users_facebook",
+      "columns": [
+        {
+          "column": "user_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "user_facebook_id",
+          "type": "bigint(11) UNSIGNED NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_users_profiles",
+      "columns": [
+        {
+          "column": "user_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "user_birthyear",
+          "type": "smallint(4) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "user_gender",
+          "type": "char(1) NOT NULL"
+        },
+        {
+          "column": "user_interests",
+          "type": "varchar(250) NOT NULL"
+        },
+        {
+          "column": "user_mobile",
+          "type": "varchar(30) NOT NULL"
+        },
+        {
+          "column": "user_address",
+          "type": "varchar(250) NOT NULL"
+        },
+        {
+          "column": "user_country",
+          "type": "int(11) UNSIGNED"
+        },
+        {
+          "column": "user_state",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "user_city",
+          "type": "varchar(50) NOT NULL"
+        },
+        {
+          "column": "user_zip",
+          "type": "varchar(10) NOT NULL"
+        },
+        {
+          "column": "user_social",
+          "type": "text"
+        },
+        {
+          "column": "user_ico",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "user_dic",
+          "type": "varchar(11) NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    },
+    {
+      "table": "bbs_users_wallet",
+      "columns": [
+        {
+          "column": "user_id",
+          "type": "int(11) UNSIGNED NOT NULL"
+        },
+        {
+          "column": "user_credit",
+          "type": "float UNSIGNED NOT NULL"
+        }
+      ],
+      "engine": "InnoDB",
+      "charset": ["CHARSET=utf8mb3", "COLLATE=utf8mb3_unicode_ci"]
+    }
+  ],
+  "tables": {
+    "bbs_autologins": [],
+    "bbs_blog": [],
+    "bbs_blog_categories": [],
+    "bbs_categories": [],
+    "bbs_categories_products_rel": [],
+    "bbs_contacts": [
+      {
+        "id": "1",
+        "company": "Koncový zákazník",
+        "street": "",
+        "street_number": "",
+        "city": "",
+        "zip": "",
+        "country": "",
+        "ico": "",
+        "dic": "",
+        "payment_id": null
+      },
+      {
+        "id": "2",
+        "company": "Syntetická Žluťoučká s.r.o.",
+        "street": "Zkušební",
+        "street_number": "001/2",
+        "city": "Brno",
+        "zip": "00123",
+        "country": "Česká republika",
+        "ico": "00001234",
+        "dic": "",
+        "payment_id": ""
+      },
+      {
+        "id": "3",
+        "company": "Druhá modelová firma",
+        "street": "Vývojářská",
+        "street_number": "12",
+        "city": "Praha",
+        "zip": "11000",
+        "country": "Česká republika",
+        "ico": "00000003",
+        "dic": "CZ00000003",
+        "payment_id": "0308"
+      }
+    ],
+    "bbs_countries": [],
+    "bbs_coupons": [],
+    "bbs_credit_orders": [
+      {
+        "id": "1",
+        "invoice_id": "20260001",
+        "user_id": "0",
+        "amount": "0",
+        "user_currency": "0",
+        "payed": "0",
+        "created_date": "0",
+        "payed_date": null
+      }
+    ],
+    "bbs_credit_orders_cache": [],
+    "bbs_currencies": [
+      {
+        "cur_id": "9",
+        "cur_name": "Česká koruna",
+        "cur_code": "CZK",
+        "cur_symbol": "Kč"
+      },
+      {
+        "cur_id": "1",
+        "cur_name": "Euro",
+        "cur_code": "EUR",
+        "cur_symbol": "€"
+      },
+      {
+        "cur_id": "0",
+        "cur_name": "",
+        "cur_code": "",
+        "cur_symbol": ""
+      }
+    ],
+    "bbs_emaillists": [],
+    "bbs_eplists": [],
+    "bbs_exchange_rates": [],
+    "bbs_invoices": [
+      {
+        "id": "11",
+        "invoice_id": "20260001",
+        "created": "2026-01-01 00:05:00",
+        "contact_id": "1",
+        "payed": "1",
+        "currency_id": "9",
+        "total": "0",
+        "filename": "20260001.pdf",
+        "due_days": "14",
+        "alto": "0"
+      },
+      {
+        "id": "12",
+        "invoice_id": "20260002",
+        "created": "2026-03-31 23:59:59",
+        "contact_id": "2",
+        "payed": "0",
+        "currency_id": "9",
+        "total": "10000.1",
+        "filename": "20260002.pdf",
+        "due_days": "14",
+        "alto": "1"
+      },
+      {
+        "id": "13",
+        "invoice_id": "9007199254740993",
+        "created": "2024-02-29 12:00:00",
+        "contact_id": "3",
+        "payed": "0",
+        "currency_id": "1",
+        "total": "0.300000012",
+        "filename": "large.pdf",
+        "due_days": "14",
+        "alto": "1"
+      }
+    ],
+    "bbs_invoices_details": [
+      {
+        "id": "1",
+        "invoice_id": "20260001",
+        "description": "Žluťoučký kůň — syntetická položka\n",
+        "price": "0",
+        "amount": "1",
+        "product_id": null
+      },
+      {
+        "id": "2",
+        "invoice_id": "20260002",
+        "description": "Žluťoučký kůň — syntetická položka\nDlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. Dlouhý popis. ",
+        "price": "10000.100000000",
+        "amount": "1",
+        "product_id": "99"
+      },
+      {
+        "id": "3",
+        "invoice_id": "9007199254740993",
+        "description": "Žluťoučký kůň — syntetická položka\n",
+        "price": "0.1",
+        "amount": "3",
+        "product_id": null
+      }
+    ],
+    "bbs_languages": [],
+    "bbs_menuitems": [],
+    "bbs_pages": [],
+    "bbs_products": [
+      {
+        "prod_id": "99",
+        "prod_idkey": "",
+        "prod_name": "",
+        "prod_image": "",
+        "prod_filename": "",
+        "prod_tags": "",
+        "prod_featured": "0",
+        "prod_shortdesc": "",
+        "prod_longdesc": "",
+        "prod_adultbook": "0",
+        "prod_booklang": "",
+        "prod_pagesno": "0",
+        "prod_wordsno": "0",
+        "prod_price_max_buys": "0",
+        "prod_price_max": "0",
+        "prod_actual_price": "0",
+        "prod_commission": null,
+        "prod_status": null,
+        "prod_publish": "0",
+        "prod_create": "0",
+        "prod_update": "0",
+        "prod_download_count": "0",
+        "prod_view_count": "0",
+        "prod_uid": "0"
+      }
+    ],
+    "bbs_purchase": [
+      {
+        "pur_id": "1",
+        "pur_invoice_id": "20260002",
+        "pur_user_id": "0",
+        "pur_total_price": null,
+        "pur_total_user_price": "0",
+        "pur_system_currency": "0",
+        "pur_user_currency": "0",
+        "pur_date": "0"
+      }
+    ],
+    "bbs_purchaserecord": [],
+    "bbs_purchase_cache": [],
+    "bbs_purchase_details": [],
+    "bbs_purchase_details_cache": [],
+    "bbs_ratings": [],
+    "bbs_routes": [],
+    "bbs_settings": [
+      {
+        "uniq_id": "1",
+        "key_text": "vat",
+        "value_text": "21"
+      },
+      {
+        "uniq_id": "2",
+        "key_text": "siteauthor_text",
+        "value_text": "Testovací studio s.r.o."
+      },
+      {
+        "uniq_id": "3",
+        "key_text": "invoiceaddress_text",
+        "value_text": "Ukázková 10"
+      },
+      {
+        "uniq_id": "4",
+        "key_text": "invoicecity_text",
+        "value_text": "Praha"
+      },
+      {
+        "uniq_id": "5",
+        "key_text": "invoicecountry_text",
+        "value_text": "Česká republika"
+      },
+      {
+        "uniq_id": "6",
+        "key_text": "invoicezip_text",
+        "value_text": "11000"
+      },
+      {
+        "uniq_id": "7",
+        "key_text": "invoicestoreid_text",
+        "value_text": "00000000"
+      },
+      {
+        "uniq_id": "8",
+        "key_text": "invoicestorevat_text",
+        "value_text": "CZ00000000"
+      },
+      {
+        "uniq_id": "9",
+        "key_text": "sitephone_text",
+        "value_text": "+420 000 000 000"
+      },
+      {
+        "uniq_id": "10",
+        "key_text": "siteemail_text",
+        "value_text": "test@example.test"
+      },
+      {
+        "uniq_id": "11",
+        "key_text": "invoicebankaccountnumber_text",
+        "value_text": "123456789"
+      },
+      {
+        "uniq_id": "12",
+        "key_text": "invoicebankcode_text",
+        "value_text": "0800"
+      },
+      {
+        "uniq_id": "13",
+        "key_text": "invoicebankaccountnumber_alto_text",
+        "value_text": "19-987654321"
+      },
+      {
+        "uniq_id": "14",
+        "key_text": "invoicebankcode_alto_text",
+        "value_text": "0100"
+      }
+    ],
+    "bbs_testimonial": [],
+    "bbs_themes": [],
+    "bbs_users": [
+      {
+        "user_id": "0",
+        "user_idkey": "0",
+        "user_username": "",
+        "user_nickname": "",
+        "user_fname": "",
+        "user_lname": "",
+        "user_email": "",
+        "user_pwd": "",
+        "user_registerdate": "2026-01-01 12:00:00",
+        "user_status": "0",
+        "user_key": "",
+        "user_accesslevel": "0",
+        "user_language": "",
+        "user_currency": "0"
+      }
+    ],
+    "bbs_users_facebook": [],
+    "bbs_users_profiles": [],
+    "bbs_users_wallet": []
+  }
+}

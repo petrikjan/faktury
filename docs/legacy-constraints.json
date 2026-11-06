@@ -1,0 +1,222 @@
+[
+  {
+    "table": "bbs_autologins",
+    "definition": "ADD PRIMARY KEY (`al_id`),\n  ADD KEY `al_key` (`al_key`)"
+  },
+  {
+    "table": "bbs_blog",
+    "definition": "ADD PRIMARY KEY (`blog_id`),\n  ADD KEY `blog_categoryid` (`blog_categoryid`)"
+  },
+  {
+    "table": "bbs_blog_categories",
+    "definition": "ADD PRIMARY KEY (`bcat_id`),\n  ADD UNIQUE KEY `bcat_slug` (`bcat_urlname`)"
+  },
+  {
+    "table": "bbs_categories",
+    "definition": "ADD PRIMARY KEY (`cate_id`),\n  ADD UNIQUE KEY `cate_urlname` (`cate_urlname`),\n  ADD KEY `cate_parent` (`cate_parent`)"
+  },
+  {
+    "table": "bbs_categories_products_rel",
+    "definition": "ADD PRIMARY KEY (`rel_id`),\n  ADD KEY `rel_cateid` (`rel_cateid`),\n  ADD KEY `rel_prodid` (`rel_prodid`)"
+  },
+  {
+    "table": "bbs_contacts",
+    "definition": "ADD PRIMARY KEY (`id`)"
+  },
+  {
+    "table": "bbs_countries",
+    "definition": "ADD PRIMARY KEY (`country_id`)"
+  },
+  {
+    "table": "bbs_coupons",
+    "definition": "ADD PRIMARY KEY (`id`),\n  ADD UNIQUE KEY `coupon_code` (`coupon_code`),\n  ADD KEY `bbs_coupons_fk1` (`user_id`),\n  ADD KEY `bbs_coupons_fk2` (`created_by_user_id`)"
+  },
+  {
+    "table": "bbs_credit_orders",
+    "definition": "ADD PRIMARY KEY (`id`),\n  ADD KEY `bbs_credit_orders_fk2` (`user_id`),\n  ADD KEY `bbs_credit_orders_fk3` (`invoice_id`)"
+  },
+  {
+    "table": "bbs_credit_orders_cache",
+    "definition": "ADD PRIMARY KEY (`id`),\n  ADD KEY `bbs_credit_orders_fk2` (`user_id`)"
+  },
+  {
+    "table": "bbs_currencies",
+    "definition": "ADD PRIMARY KEY (`cur_id`)"
+  },
+  {
+    "table": "bbs_emaillists",
+    "definition": "ADD PRIMARY KEY (`e_id`)"
+  },
+  {
+    "table": "bbs_eplists",
+    "definition": "ADD PRIMARY KEY (`eplist_id`)"
+  },
+  {
+    "table": "bbs_exchange_rates",
+    "definition": "ADD PRIMARY KEY (`ex_id`),\n  ADD KEY `ex_from` (`ex_from`),\n  ADD KEY `ex_to` (`ex_to`)"
+  },
+  {
+    "table": "bbs_invoices",
+    "definition": "ADD UNIQUE KEY `id` (`id`) USING BTREE,\n  ADD UNIQUE KEY `invoice_id` (`invoice_id`),\n  ADD KEY `bbs_invoices_fk1` (`contact_id`),\n  ADD KEY `bbs_invoices_fk2` (`currency_id`)"
+  },
+  {
+    "table": "bbs_invoices_details",
+    "definition": "ADD PRIMARY KEY (`id`),\n  ADD KEY `bbs_invoices_details_fk1` (`invoice_id`),\n  ADD KEY `bbs_invoices_details_fk2` (`product_id`)"
+  },
+  {
+    "table": "bbs_languages",
+    "definition": "ADD PRIMARY KEY (`language_id`),\n  ADD KEY `language_key` (`language_key`),\n  ADD KEY `language_key_language_type` (`language_key`,`language_type`)"
+  },
+  {
+    "table": "bbs_menuitems",
+    "definition": "ADD PRIMARY KEY (`menu_id`),\n  ADD KEY `menu_parentid` (`menu_parentid`),\n  ADD KEY `menu_pageid` (`menu_pageid`),\n  ADD KEY `menu_routeid` (`menu_routeid`)"
+  },
+  {
+    "table": "bbs_pages",
+    "definition": "ADD PRIMARY KEY (`page_id`),\n  ADD UNIQUE KEY `slug_česky` (`page_urlname`)"
+  },
+  {
+    "table": "bbs_products",
+    "definition": "ADD PRIMARY KEY (`prod_id`),\n  ADD UNIQUE KEY `prod_idkey` (`prod_idkey`),\n  ADD KEY `prod_user_id` (`prod_uid`)"
+  },
+  {
+    "table": "bbs_purchase",
+    "definition": "ADD PRIMARY KEY (`pur_id`),\n  ADD UNIQUE KEY `pur_id` (`pur_id`),\n  ADD UNIQUE KEY `pur_invoice_id` (`pur_invoice_id`),\n  ADD KEY `pur_user_id` (`pur_user_id`),\n  ADD KEY `bbs_purchase_fk3` (`pur_system_currency`),\n  ADD KEY `bbs_purchase_fk4` (`pur_user_currency`)"
+  },
+  {
+    "table": "bbs_purchaserecord",
+    "definition": "ADD PRIMARY KEY (`pur_id`),\n  ADD UNIQUE KEY `pur_code` (`pur_code`),\n  ADD KEY `pur_prodid` (`pur_prodid`),\n  ADD KEY `pur_uid` (`pur_uid`)"
+  },
+  {
+    "table": "bbs_purchase_cache",
+    "definition": "ADD PRIMARY KEY (`pur_id`),\n  ADD UNIQUE KEY `pur_id` (`pur_id`),\n  ADD KEY `pur_user_id` (`pur_user_id`)"
+  },
+  {
+    "table": "bbs_purchase_details",
+    "definition": "ADD PRIMARY KEY (`pur_id`),\n  ADD UNIQUE KEY `pur_id` (`pur_id`) USING BTREE,\n  ADD KEY `pur_parent_id` (`pur_parent_id`),\n  ADD KEY `pur_user_id` (`pur_user_id`),\n  ADD KEY `pur_product_id` (`pur_product_id`)"
+  },
+  {
+    "table": "bbs_purchase_details_cache",
+    "definition": "ADD PRIMARY KEY (`pur_id`),\n  ADD UNIQUE KEY `pur_id` (`pur_id`) USING BTREE,\n  ADD KEY `pur_parent_id` (`pur_parent_id`),\n  ADD KEY `pur_user_id` (`pur_user_id`),\n  ADD KEY `pur_product_id` (`pur_product_id`)"
+  },
+  {
+    "table": "bbs_ratings",
+    "definition": "ADD PRIMARY KEY (`rate_id`),\n  ADD KEY `rate_uid` (`rate_uid`),\n  ADD KEY `rate_pid` (`rate_pid`)"
+  },
+  {
+    "table": "bbs_routes",
+    "definition": "ADD PRIMARY KEY (`id`),\n  ADD UNIQUE KEY `controller` (`controller`)"
+  },
+  {
+    "table": "bbs_settings",
+    "definition": "ADD PRIMARY KEY (`uniq_id`),\n  ADD UNIQUE KEY `key_text` (`key_text`)"
+  },
+  {
+    "table": "bbs_testimonial",
+    "definition": "ADD PRIMARY KEY (`testi_id`)"
+  },
+  {
+    "table": "bbs_themes",
+    "definition": "ADD PRIMARY KEY (`theme_id`),\n  ADD KEY `theme_status` (`theme_status`)"
+  },
+  {
+    "table": "bbs_users",
+    "definition": "ADD PRIMARY KEY (`user_id`),\n  ADD UNIQUE KEY `user_unique_user_email` (`user_email`),\n  ADD UNIQUE KEY `user_unique_user_idkey` (`user_idkey`),\n  ADD UNIQUE KEY `user_unique_user_username` (`user_username`),\n  ADD UNIQUE KEY `user_unique_user_nickname` (`user_nickname`),\n  ADD KEY `user_key` (`user_key`),\n  ADD KEY `user_key_user_status` (`user_key`,`user_status`),\n  ADD KEY `user_currency` (`user_currency`)"
+  },
+  {
+    "table": "bbs_users_facebook",
+    "definition": "ADD UNIQUE KEY `user_facebook_id` (`user_facebook_id`),\n  ADD KEY `user_id` (`user_id`)"
+  },
+  {
+    "table": "bbs_users_profiles",
+    "definition": "ADD KEY `user_id` (`user_id`),\n  ADD KEY `user_country` (`user_country`)"
+  },
+  {
+    "table": "bbs_users_wallet",
+    "definition": "ADD UNIQUE KEY `user_id_2` (`user_id`),\n  ADD KEY `user_id` (`user_id`)"
+  },
+  {
+    "table": "bbs_blog",
+    "definition": "ADD CONSTRAINT `bbs_blog_ibfk_1` FOREIGN KEY (`blog_categoryid`) REFERENCES `bbs_blog_categories` (`bcat_id`) ON DELETE CASCADE ON UPDATE CASCADE"
+  },
+  {
+    "table": "bbs_categories",
+    "definition": "ADD CONSTRAINT `bbs_categories_ibfk_1` FOREIGN KEY (`cate_parent`) REFERENCES `bbs_categories` (`cate_id`) ON DELETE CASCADE ON UPDATE CASCADE"
+  },
+  {
+    "table": "bbs_categories_products_rel",
+    "definition": "ADD CONSTRAINT `bbs_categories_products_rel_ibfk_3` FOREIGN KEY (`rel_prodid`) REFERENCES `bbs_products` (`prod_id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  ADD CONSTRAINT `bbs_categories_products_rel_ibfk_4` FOREIGN KEY (`rel_cateid`) REFERENCES `bbs_categories` (`cate_id`) ON DELETE CASCADE ON UPDATE CASCADE"
+  },
+  {
+    "table": "bbs_coupons",
+    "definition": "ADD CONSTRAINT `bbs_coupons_fk1` FOREIGN KEY (`user_id`) REFERENCES `bbs_users` (`user_id`) ON DELETE CASCADE,\n  ADD CONSTRAINT `bbs_coupons_fk2` FOREIGN KEY (`created_by_user_id`) REFERENCES `bbs_users` (`user_id`)"
+  },
+  {
+    "table": "bbs_credit_orders",
+    "definition": "ADD CONSTRAINT `bbs_credit_orders_fk2` FOREIGN KEY (`user_id`) REFERENCES `bbs_users` (`user_id`),\n  ADD CONSTRAINT `bbs_credit_orders_fk3` FOREIGN KEY (`invoice_id`) REFERENCES `bbs_invoices` (`invoice_id`) ON DELETE CASCADE"
+  },
+  {
+    "table": "bbs_credit_orders_cache",
+    "definition": "ADD CONSTRAINT `bbs_credit_orders_cache_fk2` FOREIGN KEY (`user_id`) REFERENCES `bbs_users` (`user_id`)"
+  },
+  {
+    "table": "bbs_exchange_rates",
+    "definition": "ADD CONSTRAINT `bbs_exchange_rates_ibfk_1` FOREIGN KEY (`ex_from`) REFERENCES `bbs_currencies` (`cur_id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  ADD CONSTRAINT `bbs_exchange_rates_ibfk_2` FOREIGN KEY (`ex_to`) REFERENCES `bbs_currencies` (`cur_id`) ON DELETE CASCADE ON UPDATE CASCADE"
+  },
+  {
+    "table": "bbs_invoices",
+    "definition": "ADD CONSTRAINT `bbs_invoices_fk1` FOREIGN KEY (`contact_id`) REFERENCES `bbs_contacts` (`id`),\n  ADD CONSTRAINT `bbs_invoices_fk2` FOREIGN KEY (`currency_id`) REFERENCES `bbs_currencies` (`cur_id`) ON DELETE NO ACTION ON UPDATE NO ACTION"
+  },
+  {
+    "table": "bbs_invoices_details",
+    "definition": "ADD CONSTRAINT `bbs_invoices_details_fk1` FOREIGN KEY (`invoice_id`) REFERENCES `bbs_invoices` (`invoice_id`) ON DELETE CASCADE,\n  ADD CONSTRAINT `bbs_invoices_details_fk2` FOREIGN KEY (`product_id`) REFERENCES `bbs_products` (`prod_id`)"
+  },
+  {
+    "table": "bbs_menuitems",
+    "definition": "ADD CONSTRAINT `bbs_menuitems_ibfk_1` FOREIGN KEY (`menu_parentid`) REFERENCES `bbs_menuitems` (`menu_id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  ADD CONSTRAINT `bbs_menuitems_ibfk_2` FOREIGN KEY (`menu_pageid`) REFERENCES `bbs_pages` (`page_id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  ADD CONSTRAINT `bbs_menuitems_ibfk_3` FOREIGN KEY (`menu_routeid`) REFERENCES `bbs_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE"
+  },
+  {
+    "table": "bbs_products",
+    "definition": "ADD CONSTRAINT `bbs_products_ibfk_1` FOREIGN KEY (`prod_uid`) REFERENCES `bbs_users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE"
+  },
+  {
+    "table": "bbs_purchase",
+    "definition": "ADD CONSTRAINT `bbs_purchase_fk1` FOREIGN KEY (`pur_user_id`) REFERENCES `bbs_users` (`user_id`) ON DELETE CASCADE,\n  ADD CONSTRAINT `bbs_purchase_fk2` FOREIGN KEY (`pur_invoice_id`) REFERENCES `bbs_invoices` (`invoice_id`) ON DELETE CASCADE,\n  ADD CONSTRAINT `bbs_purchase_fk3` FOREIGN KEY (`pur_system_currency`) REFERENCES `bbs_currencies` (`cur_id`),\n  ADD CONSTRAINT `bbs_purchase_fk4` FOREIGN KEY (`pur_user_currency`) REFERENCES `bbs_currencies` (`cur_id`)"
+  },
+  {
+    "table": "bbs_purchaserecord",
+    "definition": "ADD CONSTRAINT `bbs_purchaserecord_ibfk_1` FOREIGN KEY (`pur_prodid`) REFERENCES `bbs_products` (`prod_id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  ADD CONSTRAINT `bbs_purchaserecord_ibfk_2` FOREIGN KEY (`pur_uid`) REFERENCES `bbs_users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE"
+  },
+  {
+    "table": "bbs_purchase_cache",
+    "definition": "ADD CONSTRAINT `bbs_purchase_cache_fk1` FOREIGN KEY (`pur_user_id`) REFERENCES `bbs_users` (`user_id`) ON DELETE CASCADE"
+  },
+  {
+    "table": "bbs_purchase_details",
+    "definition": "ADD CONSTRAINT `bbs_purchase_details_fk1` FOREIGN KEY (`pur_user_id`) REFERENCES `bbs_users` (`user_id`) ON DELETE CASCADE,\n  ADD CONSTRAINT `bbs_purchase_details_fk2` FOREIGN KEY (`pur_parent_id`) REFERENCES `bbs_purchase` (`pur_id`) ON DELETE CASCADE,\n  ADD CONSTRAINT `bbs_purchase_details_fk3` FOREIGN KEY (`pur_product_id`) REFERENCES `bbs_products` (`prod_id`) ON DELETE CASCADE"
+  },
+  {
+    "table": "bbs_purchase_details_cache",
+    "definition": "ADD CONSTRAINT `bbs_purchase_details_cache_fk1` FOREIGN KEY (`pur_user_id`) REFERENCES `bbs_users` (`user_id`) ON DELETE CASCADE,\n  ADD CONSTRAINT `bbs_purchase_details_cache_fk2` FOREIGN KEY (`pur_parent_id`) REFERENCES `bbs_purchase_cache` (`pur_id`) ON DELETE CASCADE,\n  ADD CONSTRAINT `bbs_purchase_details_cache_fk3` FOREIGN KEY (`pur_product_id`) REFERENCES `bbs_products` (`prod_id`) ON DELETE CASCADE"
+  },
+  {
+    "table": "bbs_ratings",
+    "definition": "ADD CONSTRAINT `bbs_ratings_ibfk_1` FOREIGN KEY (`rate_uid`) REFERENCES `bbs_users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  ADD CONSTRAINT `bbs_ratings_ibfk_2` FOREIGN KEY (`rate_pid`) REFERENCES `bbs_products` (`prod_id`) ON DELETE CASCADE ON UPDATE CASCADE"
+  },
+  {
+    "table": "bbs_users",
+    "definition": "ADD CONSTRAINT `bbs_users_ibfk_1` FOREIGN KEY (`user_currency`) REFERENCES `bbs_currencies` (`cur_id`) ON DELETE CASCADE ON UPDATE CASCADE"
+  },
+  {
+    "table": "bbs_users_facebook",
+    "definition": "ADD CONSTRAINT `bbs_users_facebook_fk1` FOREIGN KEY (`user_id`) REFERENCES `bbs_users` (`user_id`) ON DELETE CASCADE"
+  },
+  {
+    "table": "bbs_users_profiles",
+    "definition": "ADD CONSTRAINT `bbs_credit_orders_fk1` FOREIGN KEY (`user_id`) REFERENCES `bbs_users` (`user_id`) ON DELETE CASCADE,\n  ADD CONSTRAINT `bbs_users_profile_fk1` FOREIGN KEY (`user_id`) REFERENCES `bbs_users` (`user_id`) ON DELETE CASCADE,\n  ADD CONSTRAINT `bbs_users_profile_fk2` FOREIGN KEY (`user_country`) REFERENCES `bbs_countries` (`country_id`) ON DELETE CASCADE"
+  },
+  {
+    "table": "bbs_users_wallet",
+    "definition": "ADD CONSTRAINT `bbs_users_wallet_fk1` FOREIGN KEY (`user_id`) REFERENCES `bbs_users` (`user_id`) ON DELETE CASCADE"
+  }
+]

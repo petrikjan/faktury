@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+    <meta charset="utf-8">
+    <title>Invoice
+        <%= number %>
+    </title>
+    <style><%- css %></style>
+</head>
+
+<body>
+<section class="invoice-sheet">
+    <div class="main-wrapper">
+        <div class="main">
+            <table class="head"><tr>
+                <td>
+                    <strong><%= supplier.company %></strong><br><br><%= supplier.street %><br><%= supplier.zip %> <%= supplier.city %><br><%= supplier.country %>
+                </td><!--
+             --><td class="text-center">
+                    IČ: <%= supplier.ico %><br> DIČ: <%= supplier.dic %><br><br> <%= supplier.website %>
+                </td><!--
+             --><td class="text-right">
+                    tel.: <%= supplier.phone %><br> e-mail: <%= supplier.email %>
+                </td>
+            </tr></table>
+
+            <div class="heading">
+                <div class="invoice-id text-right">
+                    <%= number %>
+                </div>
+                <h1>Faktura - daňový doklad</h1>
+
+
+            </div>
+
+            <div class="continuation-context" hidden>Odběratel: <%= customer.end_customer ? "Koncový zákazník" : customer.company %> · pokračování faktury</div>
+            <div class="invoice-party width-100 clear">
+                <div class="width-50 float-left">
+                    <div class="logo-banka">
+                        <div class="logo"><img alt="" src="<%= logo %>"></div>
+                        <div class="banka">
+                            <div class="rozpuleni">
+                                <div class="datum">
+                                    <div>Datum:</div>
+                                    <div class="datum-symbol">
+                                        <div class="rozpuleni text-right">
+                                            <div class="right-margin">
+                                                Vystavení:<br> Splatnosti:
+                                                <br> DUZP:
+                                            </div>
+                                        </div><!--
+                                     --><div class="rozpuleni">
+                                            <div class="left-margin">
+                                                <%= issued %><br> <%= due %>
+                                                <br> <%= taxable %>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div><!--
+                         --><div class="rozpuleni">
+                                <div class="symbol">
+                                    <div>Symbol:</div>
+                                    <div class="datum-symbol">
+                                        <div class="rozpuleni text-right">
+                                            <div class="right-margin">
+                                                Variabilní:
+                                            </div><% if (customer.payment_id !== null) { %>
+                                            <div class="right-margin">
+                                                Konstantní:
+                                            </div><% } %>
+                                        </div><!--
+                                     --><div class="rozpuleni">
+                                            <div class="left-margin">
+                                                <%= number %>
+                                            </div><% if (customer.payment_id !== null) { %>
+                                            <div class="left-margin">
+                                                <%= customer.payment_id %>
+                                            </div><% } %>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <br style="clear: both;">
+                            <div class="cislo-uctu">
+                                <div class="right-margin-bigger">
+                                    <div>Bankovní účet:</div>
+                                    <div class="cislo-uctu-ramecek">
+                                        <%= bank.account_number %></div>
+                                </div>
+
+                            </div><!--
+                         --><div class="kod-banky">
+                                <div class="left-margin-bigger">
+                                    <div>Kód banky:</div>
+                                    <div class="cislo-uctu-ramecek">
+                                        <%= bank.bank_code %>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="width-50 float-left">
+                    <div class="odberatel">
+                        <div>Odběratel:</div>
+                        <% if (customer.end_customer) { %>
+                        <div class="odberatel-adresa"><h3>Koncový zákazník</h3>
+                        <% } else { %>
+                         <div class="odberatel-adresa"><strong><%= customer.company %></strong><br><%= customer.street %> <%= customer.street_number %><br><%= customer.zip %> <%= customer.city %><br><%= customer.country %>
+                            <% } %>
+                            </div>
+
+                        <div>
+                            <div class="rozpuleni  odberatel-ico-dic">
+                                <div class="rozpuleni text-right"><strong>Platba:</strong></div><!--
+                             --><div class="rozpuleni">Převodem</div>
+                            </div><!--
+                         --><div class="rozpuleni  odberatel-ico-dic">
+                            <% if (!customer.end_customer) { %>
+                                <div class="rozpuleni text-right"><strong>IČO:<br> DIČ:</strong></div><!--
+                             --><div class="rozpuleni"><%= customer.ico %><br><%= customer.dic %></div>
+                            <% } %>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="polozky width-100 clear">
+                <p>Fakturujeme Vám za dodané zboží či služby:</p>
+
+                <table class="tabulka-polozky">
+                    <thead>
+                        <tr>
+                            <th class="text-left table-polozka">Položka</th>
+                            <th class="text-center table-ks">Počet m.j.</th>
+                            <th class="text-right table-cenamj">Cena m.j.</th>
+                            <th class="text-right table-dph">DPH %</th>
+                            <th class="text-right table-bezdph">Bez DPH</th>
+                            <th class="text-right table-sdph">DPH</th>
+                            <th class="text-right table-celkem">Celkem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (const item of items) { %>
+                        <tr>
+                            <td class="text-left table-polozka description"><%= item.description %></td>
+                            <td class="text-center table-ks"><%= quantity(item.quantity) %></td>
+                            <td class="text-right table-cenamj"><%= fmt(item.price) %></td>
+                            <td class="text-right table-dph"><%= fmt(item.vat_rate) %>%</td>
+                            <td class="text-right table-bezdph"><%= fmt(item.net) %></td>
+                            <td class="text-right table-sdph"><%= fmt(item.vat) %></td>
+                            <td class="text-right table-celkem"><%= fmt(item.gross) %></td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+
+                </table>
+
+                <p class="payment-note">Při zpožděné úhradě Vám budeme účtovat penále ve výši 0,3 % za každý započatý den prodlení.</p>
+            </div>
+
+            <div class="settlement width-100">
+                <div class="width-33">
+                    <div class="qr"><img alt="QR Platba" src="<%= qr %>"><div class="qr-label">QR Platba</div>
+                    </div>
+                </div>
+
+                <div class="width-66">
+                    <table class="tabulka-celkem">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Základ</th>
+                                <th>Výše DPH</th>
+                                <th>Celkem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="td-celkem">Celkem</td>
+                                <td><%= fmt(net) %></td>
+                                <td><%= fmt(vat) %></td>
+                                <td><%= fmt(gross) %></td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                    <div>
+                        <div class="rozpuleni">
+                            <h2>Celkem k úhradě:</h2>
+                        </div><!--
+                     --><div class="rozpuleni text-right">
+                            <h2><%= fmt(gross) %> Kč</h2>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="footer-wrapper"><div class="footer"><div class="width-50"><%- footerLeft %><span class="page-number"></span></div><!--
+--><div class="text-right width-50"><%= supplier.footer %></div></div></div></section>
+</body></html>
